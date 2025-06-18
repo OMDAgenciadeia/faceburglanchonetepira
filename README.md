@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FACE BURG - Delivery</title>
+    <title>Face Burg - Delivery 18h-1h</title>
     <base target="_self">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@preline/preline@2.0.0/dist/preline.min.js"></script>
@@ -16,145 +15,154 @@
                 extend: {
                     colors: {
                         primary: '#FF6B00',
-                        secondary: '#FF9500',
+                        secondary: '#FFD700',
                         dark: '#1E1E1E',
-                        light: '#F5F5F5'
                     }
                 }
             }
         }
     </script>
     <style>
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
+        .cart-item-enter {
+            opacity: 0;
+            transform: translateY(20px);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .cart-item-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 300ms ease-out;
         }
-        .cart-item:hover {
-            transform: translateX(5px);
-            transition: transform 0.2s ease;
+        .cart-item-exit {
+            opacity: 1;
         }
-        .send-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .cart-item-exit-active {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 300ms ease-in;
         }
         .menu-category {
-            scroll-margin-top: 1rem;
+            scroll-margin-top: 100px;
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-dark text-gray-800 dark:text-gray-200 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-        <header class="flex justify-between items-center mb-8">
-            <div class="flex items-center">
-                <img src="https://via.placeholder.com/50" alt="FACE BURG Logo" class="h-12 mr-3">
-                <h1 class="text-2xl font-bold text-primary">FACE BURG</h1>
+<body class="bg-gray-50 dark:bg-dark text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <header class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-hamburger text-2xl text-primary"></i>
+                <h1 class="text-xl font-bold">FACE BURG</h1>
             </div>
             <div class="flex items-center space-x-4">
-                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <i class="fas fa-moon dark:hidden"></i>
-                    <i class="fas fa-sun hidden dark:inline"></i>
+                <button id="cart-toggle" class="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
                 </button>
-                <div class="relative">
-                    <button id="cart-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 relative">
-                        <i class="fas fa-shopping-cart text-xl"></i>
-                        <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                    </button>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+        <div class="bg-primary text-white py-2 text-center">
+            <p class="text-sm font-medium">Delivery das 18h às 1h | Segunda a Domingo</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Menu Section -->
+            <div class="lg:w-3/4">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-primary border-b pb-2">HAMBÚRGUERES</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="burgers">
+                        <!-- Burgers will be inserted here by JS -->
+                    </div>
+                </div>
+
+                <div class="mb-8 menu-category" id="adicionais">
+                    <h2 class="text-2xl font-bold mb-4 text-primary border-b pb-2">ADICIONAIS</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="adicionais-items">
+                        <!-- Additional items will be inserted here by JS -->
+                    </div>
+                </div>
+
+                <div class="mb-8 menu-category" id="bebidas">
+                    <h2 class="text-2xl font-bold mb-4 text-primary border-b pb-2">BEBIDAS</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="bebidas-items">
+                        <!-- Drinks will be inserted here by JS -->
+                    </div>
+                </div>
+
+                <div class="mb-8 menu-category" id="fries">
+                    <h2 class="text-2xl font-bold mb-4 text-primary border-b pb-2">FRITAS</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="fries-items">
+                        <!-- Fries will be inserted here by JS -->
+                    </div>
+                </div>
+
+                <div class="mb-8 menu-category" id="acai">
+                    <h2 class="text-2xl font-bold mb-4 text-primary border-b pb-2">AÇAÍ (COPOS E TIGELAS)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="acai-items">
+                        <!-- Açai items will be inserted here by JS -->
+                    </div>
+                </div>
+
+                <div class="mb-8 menu-category" id="combos">
+                    <h2 class="text-2xl font-bold mb-4 text-primary border-b pb-2">COMBOS</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="combo-items">
+                        <!-- Combos will be inserted here by JS -->
+                    </div>
                 </div>
             </div>
-        </header>
 
-        <div class="text-center mb-8">
-            <p class="text-sm text-gray-600 dark:text-gray-400">
-                <i class="fas fa-clock mr-1"></i> Funcionamento: 18h às 1h | Segunda a Domingo
-            </p>
-        </div>
-
-        <div class="flex overflow-x-auto mb-6 pb-2 space-x-2">
-            <a href="#hamburgers" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Hambúrgueres</a>
-            <a href="#fries" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Fritas</a>
-            <a href="#acai" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Açaí</a>
-            <a href="#combos" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Combos</a>
-            <a href="#drinks" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Refrigerantes</a>
-            <a href="#sodas" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Refri Lata</a>
-            <a href="#beers" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Cervejas</a>
-            <a href="#juices" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Sucos</a>
-            <a href="#waters" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Águas</a>
-            <a href="#candies" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Bomboniere</a>
-            <a href="#extras" class="category-link px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm whitespace-nowrap">Adicionais</a>
-        </div>
-
-        <main class="grid lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2">
-                <!-- Menu sections will be generated here by JavaScript -->
-            </div>
-
-            <div class="hidden lg:block">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sticky top-4">
-                    <h2 class="text-xl font-bold mb-4 text-primary">Seu Carrinho</h2>
-                    <div id="cart-items" class="mb-4 max-h-96 overflow-y-auto">
-                        <p class="text-gray-500 dark:text-gray-400 text-center py-4">Seu carrinho está vazio</p>
+            <!-- Cart Sidebar -->
+            <div class="lg:w-1/4">
+                <div id="cart-sidebar" class="hidden lg:block fixed lg:sticky top-24 right-0 lg:right-auto w-full lg:w-auto lg:max-w-xs bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 h-[calc(100vh-150px)] overflow-y-auto transition-all duration-300 transform translate-x-full lg:translate-x-0">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold">Seu Pedido</h3>
+                        <button id="close-cart" class="lg:hidden p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
+                    
+                    <div id="cart-items" class="mb-4 space-y-3">
+                        <!-- Cart items will be inserted here by JS -->
+                        <div class="text-center py-8 text-gray-500" id="empty-cart-message">
+                            <i class="fas fa-shopping-cart text-4xl mb-2"></i>
+                            <p>Seu carrinho está vazio</p>
+                        </div>
+                    </div>
+                    
                     <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
-                        <div class="flex justify-between mb-2">
-                            <span>Subtotal:</span>
-                            <span id="subtotal">R$ 0,00</span>
+                        <div class="flex justify-between font-bold mb-2">
+                            <span>Total:</span>
+                            <span id="cart-total">R$ 0,00</span>
                         </div>
+                        
                         <div class="mb-4">
-                            <label for="customer-name" class="block text-sm font-medium mb-1">Nome Completo*</label>
-                            <input type="text" id="customer-name" class="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" required>
+                            <label for="customer-name" class="block text-sm font-medium mb-1">Nome*</label>
+                            <input type="text" id="customer-name" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600" placeholder="Seu nome completo">
                         </div>
+                        
                         <div class="mb-4">
-                            <label for="customer-address" class="block text-sm font-medium mb-1">Endereço Completo*</label>
-                            <textarea id="customer-address" rows="3" class="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" required></textarea>
+                            <label for="customer-address" class="block text-sm font-medium mb-1">Endereço*</label>
+                            <textarea id="customer-address" rows="3" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600" placeholder="Endereço completo para entrega"></textarea>
                         </div>
-                        <button id="send-order" disabled class="send-btn w-full bg-gray-300 text-gray-600 py-3 rounded-md font-medium transition-colors">
-                            ENVIAR PEDIDO
+                        
+                        <button id="send-order" disabled class="w-full bg-gray-400 text-white py-3 rounded-lg font-bold transition-colors duration-300 flex items-center justify-center space-x-2">
+                            <span>ENVIAR PEDIDO</span>
+                            <i class="fas fa-whatsapp"></i>
                         </button>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
-
-    <!-- Mobile Cart Sidebar -->
-    <div id="mobile-cart" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 translate-x-full">
-            <div class="p-4 flex justify-between items-center border-b dark:border-gray-700">
-                <h2 class="text-xl font-bold text-primary">Seu Carrinho</h2>
-                <button id="close-cart" class="p-2">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="mobile-cart-items" class="p-4 max-h-[60vh] overflow-y-auto">
-                <p class="text-gray-500 dark:text-gray-400 text-center py-4">Seu carrinho está vazio</p>
-            </div>
-            <div class="p-4 border-t dark:border-gray-700">
-                <div class="flex justify-between mb-2">
-                    <span>Subtotal:</span>
-                    <span id="mobile-subtotal">R$ 0,00</span>
-                </div>
-                <div class="mb-4">
-                    <label for="mobile-customer-name" class="block text-sm font-medium mb-1">Nome Completo*</label>
-                    <input type="text" id="mobile-customer-name" class="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" required>
-                </div>
-                <div class="mb-4">
-                    <label for="mobile-customer-address" class="block text-sm font-medium mb-1">Endereço Completo*</label>
-                    <textarea id="mobile-customer-address" rows="3" class="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" required></textarea>
-                </div>
-                <button id="mobile-send-order" disabled class="send-btn w-full bg-gray-300 text-gray-600 py-3 rounded-md font-medium transition-colors">
-                    ENVIAR PEDIDO
-                </button>
-            </div>
         </div>
-    </div>
+    </main>
 
     <script>
-        // Menu data
+        // Menu Data
         const menuItems = {
-            hamburgers: [
+            burgers: [
                 { name: "SUPREMO", price: 31.00 },
                 { name: "F-PICANHA", price: 35.00 },
                 { name: "F-PICANHA DUPLO", price: 45.00 },
@@ -177,12 +185,42 @@
                 { name: "MISTO QUENTE", price: 8.00 },
                 { name: "VEGETARIANO", price: 27.00 }
             ],
+            adicionais: [
+                { name: "BACON ADICIONAL", price: 5.00 },
+                { name: "BIFE ARTESANAL", price: 0.00 },
+                { name: "HAMBÚRGUER 56G ADICIONAL", price: 2.50 },
+                { name: "HAMBÚRGUER ARTESANAL 180G", price: 6.50 },
+                { name: "HAMBÚRGUER DE PICANHA 90G ADICIONAL", price: 4.50 },
+                { name: "CALABRESA ADICIONAL", price: 5.00 },
+                { name: "CREME CHEDDAR ADICIONAL", price: 5.00 },
+                { name: "FILÉ ADICIONAL", price: 8.00 },
+                { name: "LOMBO ADICIONAL", price: 5.00 },
+                { name: "FRANGO ADICIONAL", price: 6.00 },
+                { name: "OVO ADICIONAL", price: 2.00 },
+                { name: "PRESUNTO ADICIONAL", price: 2.50 },
+                { name: "QUEIJO MUSSARELA ADICIONAL", price: 2.00 },
+                { name: "SALSICHA ADICIONAL", price: 2.00 }
+            ],
+            bebidas: [
+                { name: "REFRIGERANTE LATA (Coca-Cola)", price: 7.00 },
+                { name: "REFRIGERANTE LATA (Fanta Laranja)", price: 7.00 },
+                { name: "REFRIGERANTE LATA (Fanta Uva)", price: 7.00 },
+                { name: "REFRIGERANTE LATA (Guaraná Antártica)", price: 7.00 },
+                { name: "REFRIGERANTE LATA (Sprite)", price: 7.00 },
+                { name: "COCA-COLA ZERO 350ML", price: 7.00 }
+            ],
             fries: [
                 { name: "FRITAS", price: 10.00 }
             ],
             acai: [
                 { name: "FACE OREO", price: 24.00 },
-                { name: "COPO DE AÇAÍ MONTADO 500ML (Face Bis, Delícia, Brasil, Kids, Ninho, Ouro, Tropical)", price: 21.00 },
+                { name: "COPO DE AÇAÍ MONTADO 500ML (Face Bis)", price: 21.00 },
+                { name: "COPO DE AÇAÍ MONTADO 500ML (Face Delícia)", price: 21.00 },
+                { name: "COPO DE AÇAÍ MONTADO 500ML (Face Brasil)", price: 21.00 },
+                { name: "COPO DE AÇAÍ MONTADO 500ML (Face Kids)", price: 21.00 },
+                { name: "COPO DE AÇAÍ MONTADO 500ML (Face Ninho)", price: 21.00 },
+                { name: "COPO DE AÇAÍ MONTADO 500ML (Face Ouro)", price: 21.00 },
+                { name: "COPO DE AÇAÍ MONTADO 500ML (Face Tropical)", price: 21.00 },
                 { name: "COPO DE AÇAÍ MONTADO 500ML (Face dos Sonhos)", price: 22.00 },
                 { name: "COPO DE AÇAÍ MONTADO 500ML (Face Especial)", price: 23.00 },
                 { name: "COPO DE AÇAÍ MONTADO 500ML (Face Nutella)", price: 24.00 },
@@ -201,216 +239,161 @@
                 { name: "COMBO F-BACON", price: 27.50 },
                 { name: "COMBO F-PICANHA C/ FRITAS", price: 34.99 },
                 { name: "F-BACON + FRITAS + REFRI LATA", price: 30.00 }
-            ],
-            drinks: [
-                { name: "REFRIGERANTE 2L (Coca-Cola, Fanta Uva, Fanta Laranja, Sprite, Guaraná)", price: 16.00 },
-                { name: "PEPSI 1L", price: 10.00 },
-                { name: "REFRIGERANTE 1L (Coca-Cola)", price: 12.00 },
-                { name: "REFRIGERANTE 1L (Guaraná Antártica)", price: 11.00 },
-                { name: "REFRIGERANTE 600ML (Sprite, Fanta Laranja, Coca-Cola, Fanta Uva, Guaraná Antártica)", price: 9.00 },
-                { name: "H2O", price: 9.00 },
-                { name: "GUARANÁ MINEIRO 350ML", price: 5.00 },
-                { name: "COCA-COLA ZERO 350ML", price: 7.00 },
-                { name: "RED BULL", price: 15.00 }
-            ],
-            sodas: [
-                { name: "REFRIGERANTE LATA (Coca-Cola)", price: 7.00 },
-                { name: "REFRIGERANTE LATA (Fanta Laranja)", price: 7.00 },
-                { name: "REFRIGERANTE LATA (Fanta Uva)", price: 7.00 },
-                { name: "REFRIGERANTE LATA (Guaraná Antártica)", price: 7.00 },
-                { name: "REFRIGERANTE LATA (Sprite)", price: 7.00 }
-            ],
-            beers: [
-                { name: "HEINEKEN 330ML", price: 11.00 },
-                { name: "BUDWEISER LONG", price: 10.00 },
-                { name: "SPATEN LONG", price: 9.00 },
-                { name: "BRAHMA 355ML LONG", price: 9.00 }
-            ],
-            juices: [
-                { name: "SUCO LARANJA", price: 8.00 },
-                { name: "SUCO ACEROLA NATURAL", price: 10.00 },
-                { name: "SUCO ABACAXI C/ HORTELÃ", price: 10.00 },
-                { name: "SUCO GOIABA NATURAL", price: 10.00 },
-                { name: "SUCO MARACUJÁ NATURAL", price: 12.00 },
-                { name: "SUCO DEL VALLE UVA", price: 6.00 },
-                { name: "SUCO DEL VALLE PÊSSEGO", price: 6.00 },
-                { name: "SUCO DEL VALLE MARACUJÁ LATA", price: 6.00 }
-            ],
-            waters: [
-                { name: "ÁGUA SEM GÁS", price: 5.00 },
-                { name: "ÁGUA COM GÁS", price: 5.00 }
-            ],
-            candies: [
-                { name: "BALAS", price: 0.10 },
-                { name: "BOMBOM", price: 1.00 },
-                { name: "BATON", price: 2.00 },
-                { name: "CARIBE", price: 3.00 },
-                { name: "CHICLETS", price: 0.25 },
-                { name: "CHOKITO", price: 2.50 },
-                { name: "HALLS", price: 2.00 },
-                { name: "MENTOS", price: 2.00 },
-                { name: "PRESTÍGIO", price: 2.50 },
-                { name: "TALENTO 56G", price: 2.50 },
-                { name: "TRENTO", price: 3.00 },
-                { name: "TRIDENT", price: 2.00 },
-                { name: "DIAMANTE NEGRO", price: 2.00 },
-                { name: "LAKA 34G", price: 2.00 },
-                { name: "KITKAT", price: 5.00 },
-                { name: "TALENTO GRANDE", price: 5.50 }
-            ],
-            extras: [
-                { name: "MOLHO ESPECIAL", price: 2.00 },
-                { name: "ABACAXI ADICIONAL", price: 1.50 },
-                { name: "BACON ADICIONAL", price: 5.00 },
-                { name: "BIFE ARTESANAL", price: 0.00 },
-                { name: "HAMBÚRGUER 56G ADICIONAL", price: 2.50 },
-                { name: "HAMBÚRGUER ARTESANAL 180G", price: 6.50 },
-                { name: "HAMBÚRGUER DE PICANHA 90G ADICIONAL", price: 4.50 },
-                { name: "CALABRESA ADICIONAL", price: 5.00 },
-                { name: "CREME CHEDDAR ADICIONAL", price: 5.00 },
-                { name: "FILÉ ADICIONAL", price: 8.00 },
-                { name: "LOMBO ADICIONAL", price: 5.00 },
-                { name: "FRANGO ADICIONAL", price: 6.00 },
-                { name: "OVO ADICIONAL", price: 2.00 },
-                { name: "PRESUNTO ADICIONAL", price: 2.50 },
-                { name: "QUEIJO MUSSARELA ADICIONAL", price: 2.00 },
-                { name: "SALSICHA ADICIONAL", price: 2.00 }
             ]
         };
 
-        // Cart data
+        // Cart State
         let cart = [];
-        
-        // DOM elements
-        const cartItemsEl = document.getElementById('cart-items');
-        const mobileCartItemsEl = document.getElementById('mobile-cart-items');
-        const cartCountEl = document.getElementById('cart-count');
-        const subtotalEl = document.getElementById('subtotal');
-        const mobileSubtotalEl = document.getElementById('mobile-subtotal');
-        const sendOrderBtn = document.getElementById('send-order');
-        const mobileSendOrderBtn = document.getElementById('mobile-send-order');
-        const customerNameEl = document.getElementById('customer-name');
-        const customerAddressEl = document.getElementById('customer-address');
-        const mobileCustomerNameEl = document.getElementById('mobile-customer-name');
-        const mobileCustomerAddressEl = document.getElementById('mobile-customer-address');
-        const cartBtn = document.getElementById('cart-btn');
-        const mobileCart = document.getElementById('mobile-cart');
-        const closeCartBtn = document.getElementById('close-cart');
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const categoryLinks = document.querySelectorAll('.category-link');
+        let cartVisible = false;
 
-        // Initialize the app
+        // DOM Elements
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartToggle = document.getElementById('cart-toggle');
+        const closeCart = document.getElementById('close-cart');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotal = document.getElementById('cart-total');
+        const sendOrderBtn = document.getElementById('send-order');
+        const customerName = document.getElementById('customer-name');
+        const customerAddress = document.getElementById('customer-address');
+        const themeToggle = document.getElementById('theme-toggle');
+
+        // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
+            updateCart();
             setupEventListeners();
             checkThemePreference();
         });
 
-        // Render the menu
+        // Render menu items
         function renderMenu() {
-            const menuContainer = document.querySelector('main > div.lg\\:col-span-2');
-            
-            // Clear existing menu
-            menuContainer.innerHTML = '';
-            
-            // Render each category
-            renderCategory('hamburgers', 'Hambúrgueres', 'hamburgers');
-            renderCategory('fries', 'Fritas', 'fries');
-            renderCategory('acai', 'Açaí (Copos e Tigelas)', 'acai');
-            renderCategory('combos', 'Combos', 'combos');
-            renderCategory('drinks', 'Refrigerantes', 'drinks');
-            renderCategory('sodas', 'Refrigerantes em Lata', 'sodas');
-            renderCategory('beers', 'Cervejas', 'beers');
-            renderCategory('juices', 'Sucos', 'juices');
-            renderCategory('waters', 'Águas', 'waters');
-            renderCategory('candies', 'Bomboniere', 'candies');
-            renderCategory('extras', 'Acréscimos (Adicionais)', 'extras');
-        }
+            // Render burgers
+            const burgersContainer = document.getElementById('burgers');
+            menuItems.burgers.forEach(item => {
+                burgersContainer.appendChild(createMenuItemCard(item));
+            });
 
-        function renderCategory(categoryId, categoryName, anchorId) {
-            const menuContainer = document.querySelector('main > div.lg\\:col-span-2');
-            
-            const section = document.createElement('div');
-            section.className = 'mb-12 fade-in menu-category';
-            section.id = anchorId;
-            section.innerHTML = `
-                <h3 class="text-xl font-semibold mb-4 text-primary">${categoryName}</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="menu-section-${categoryId}"></div>
-            `;
-            menuContainer.appendChild(section);
-            
-            menuItems[categoryId].forEach(item => {
-                createMenuItem(item, categoryId);
+            // Render adicionais
+            const adicionaisContainer = document.getElementById('adicionais-items');
+            menuItems.adicionais.forEach(item => {
+                adicionaisContainer.appendChild(createMenuItemCard(item));
+            });
+
+            // Render bebidas
+            const bebidasContainer = document.getElementById('bebidas-items');
+            menuItems.bebidas.forEach(item => {
+                bebidasContainer.appendChild(createMenuItemCard(item));
+            });
+
+            // Render fries
+            const friesContainer = document.getElementById('fries-items');
+            menuItems.fries.forEach(item => {
+                friesContainer.appendChild(createMenuItemCard(item));
+            });
+
+            // Render açaí
+            const acaiContainer = document.getElementById('acai-items');
+            menuItems.acai.forEach(item => {
+                acaiContainer.appendChild(createMenuItemCard(item));
+            });
+
+            // Render combos
+            const combosContainer = document.getElementById('combo-items');
+            menuItems.combos.forEach(item => {
+                combosContainer.appendChild(createMenuItemCard(item));
             });
         }
 
-        function createMenuItem(item, categoryId) {
-            const container = document.getElementById(`menu-section-${categoryId}`);
+        // Create menu item card
+        function createMenuItemCard(item) {
+            const card = document.createElement('div');
+            card.className = 'bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300';
             
-            const itemEl = document.createElement('div');
-            itemEl.className = 'bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow';
-            itemEl.innerHTML = `
+            card.innerHTML = `
                 <div class="p-4">
-                    <div class="flex justify-between items-start">
-                        <h4 class="font-medium">${item.name}</h4>
-                        <span class="font-semibold text-primary">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                    <h3 class="font-bold text-lg mb-1">${item.name}</h3>
+                    <div class="flex justify-between items-center">
+                        <span class="text-primary font-bold">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                        <button class="add-to-cart bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-orange-700 transition-colors duration-300" data-name="${item.name}" data-price="${item.price}">
+                            <i class="fas fa-plus mr-1"></i> Adicionar
+                        </button>
                     </div>
-                    <button class="add-to-cart mt-3 w-full py-2 bg-primary hover:bg-secondary text-white rounded-md transition-colors" 
-                            data-name="${item.name}" data-price="${item.price}">
-                        Adicionar
-                    </button>
                 </div>
             `;
-            container.appendChild(itemEl);
+            
+            return card;
         }
 
-        // Event listeners
+        // Setup event listeners
         function setupEventListeners() {
-            // Add to cart buttons
-            document.addEventListener('click', (e) => {
-                if (e.target.classList.contains('add-to-cart')) {
-                    const name = e.target.dataset.name;
-                    const price = parseFloat(e.target.dataset.price);
-                    addToCart(name, price);
+            // Cart toggle
+            cartToggle.addEventListener('click', () => {
+                cartVisible = !cartVisible;
+                if (cartVisible) {
+                    cartSidebar.classList.remove('hidden');
+                    setTimeout(() => {
+                        cartSidebar.classList.remove('translate-x-full');
+                    }, 10);
+                } else {
+                    cartSidebar.classList.add('translate-x-full');
+                    setTimeout(() => {
+                        cartSidebar.classList.add('hidden');
+                    }, 300);
                 }
             });
 
-            // Cart buttons
-            cartBtn.addEventListener('click', () => {
-                mobileCart.classList.remove('hidden');
-                document.querySelector('#mobile-cart > div').classList.remove('translate-x-full');
-            });
-
-            closeCartBtn.addEventListener('click', () => {
-                document.querySelector('#mobile-cart > div').classList.add('translate-x-full');
+            // Close cart on mobile
+            closeCart.addEventListener('click', () => {
+                cartVisible = false;
+                cartSidebar.classList.add('translate-x-full');
                 setTimeout(() => {
-                    mobileCart.classList.add('hidden');
+                    cartSidebar.classList.add('hidden');
                 }, 300);
             });
 
-            // Form validation
-            [customerNameEl, customerAddressEl, mobileCustomerNameEl, mobileCustomerAddressEl].forEach(el => {
-                el.addEventListener('input', validateForm);
+            // Add to cart buttons
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
+                    const button = e.target.classList.contains('add-to-cart') ? e.target : e.target.closest('.add-to-cart');
+                    const name = button.dataset.name;
+                    const price = parseFloat(button.dataset.price);
+                    
+                    addToCart(name, price);
+                    
+                    // Animation feedback
+                    button.innerHTML = '<i class="fas fa-check mr-1"></i> Adicionado';
+                    button.classList.remove('bg-primary', 'hover:bg-orange-700');
+                    button.classList.add('bg-green-500', 'hover:bg-green-600');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fas fa-plus mr-1"></i> Adicionar';
+                        button.classList.remove('bg-green-500', 'hover:bg-green-600');
+                        button.classList.add('bg-primary', 'hover:bg-orange-700');
+                    }, 1000);
+                }
             });
 
-            // Send order buttons
+            // Remove item from cart
+            cartItemsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
+                    const button = e.target.classList.contains('remove-item') ? e.target : e.target.closest('.remove-item');
+                    const index = parseInt(button.dataset.index);
+                    removeFromCart(index);
+                }
+            });
+
+            // Customer info validation
+            [customerName, customerAddress].forEach(input => {
+                input.addEventListener('input', validateOrderButton);
+            });
+
+            // Send order
             sendOrderBtn.addEventListener('click', sendOrder);
-            mobileSendOrderBtn.addEventListener('click', sendOrder);
 
             // Theme toggle
-            themeToggleBtn.addEventListener('click', toggleTheme);
-
-            // Category links
-            categoryLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = link.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
+            themeToggle.addEventListener('click', toggleTheme);
         }
 
         // Cart functions
@@ -428,16 +411,6 @@
             }
             
             updateCart();
-            
-            // Show feedback
-            const feedback = document.createElement('div');
-            feedback.className = 'fixed bottom-4 right-4 bg-primary text-white px-4 py-2 rounded-md shadow-lg animate-bounce';
-            feedback.textContent = `${name} adicionado ao carrinho!`;
-            document.body.appendChild(feedback);
-            
-            setTimeout(() => {
-                feedback.remove();
-            }, 2000);
         }
 
         function removeFromCart(index) {
@@ -446,142 +419,98 @@
         }
 
         function updateCart() {
-            // Update cart count
-            const count = cart.reduce((total, item) => total + item.quantity, 0);
-            cartCountEl.textContent = count;
+            // Update cart items display
+            cartItemsContainer.innerHTML = '';
             
-            // Update cart items
-            renderCartItems();
-            
-            // Update subtotal
-            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-            subtotalEl.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-            mobileSubtotalEl.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-            
-            // Validate form
-            validateForm();
-        }
-
-        function renderCartItems() {
-            // Desktop cart
             if (cart.length === 0) {
-                cartItemsEl.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-4">Seu carrinho está vazio</p>';
-                mobileCartItemsEl.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-4">Seu carrinho está vazio</p>';
-                return;
-            }
-            
-            cartItemsEl.innerHTML = '';
-            mobileCartItemsEl.innerHTML = '';
-            
-            cart.forEach((item, index) => {
-                const itemEl = document.createElement('div');
-                itemEl.className = 'flex justify-between items-center py-3 border-b dark:border-gray-700 cart-item';
-                itemEl.innerHTML = `
-                    <div>
-                        <h4 class="font-medium">${item.name}</h4>
-                        <div class="flex items-center mt-1">
-                            <button class="quantity-btn text-sm px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" data-index="${index}" data-action="decrease">-</button>
-                            <span class="mx-2">${item.quantity}</span>
-                            <button class="quantity-btn text-sm px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" data-index="${index}" data-action="increase">+</button>
-                            <span class="ml-4 font-semibold">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</span>
-                        </div>
-                    </div>
-                    <button class="remove-btn text-red-500 hover:text-red-700" data-index="${index}">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                `;
-                cartItemsEl.appendChild(itemEl.cloneNode(true));
-                mobileCartItemsEl.appendChild(itemEl);
-            });
-            
-            // Add event listeners to quantity and remove buttons
-            document.querySelectorAll('.quantity-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = parseInt(e.target.dataset.index);
-                    const action = e.target.dataset.action;
-                    
-                    if (action === 'increase') {
-                        cart[index].quantity += 1;
-                    } else if (action === 'decrease') {
-                        if (cart[index].quantity > 1) {
-                            cart[index].quantity -= 1;
-                        } else {
-                            removeFromCart(index);
-                            return;
-                        }
-                    }
-                    
-                    updateCart();
-                });
-            });
-            
-            document.querySelectorAll('.remove-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = parseInt(e.target.dataset.index);
-                    removeFromCart(index);
-                });
-            });
-        }
-
-        // Form validation
-        function validateForm() {
-            const name = customerNameEl.value.trim() || mobileCustomerNameEl.value.trim();
-            const address = customerAddressEl.value.trim() || mobileCustomerAddressEl.value.trim();
-            const hasItems = cart.length > 0;
-            
-            const isValid = name && address && hasItems;
-            
-            sendOrderBtn.disabled = !isValid;
-            mobileSendOrderBtn.disabled = !isValid;
-            
-            if (isValid) {
-                sendOrderBtn.classList.remove('bg-gray-300', 'text-gray-600');
-                sendOrderBtn.classList.add('bg-green-500', 'hover:bg-green-600', 'text-white');
-                mobileSendOrderBtn.classList.remove('bg-gray-300', 'text-gray-600');
-                mobileSendOrderBtn.classList.add('bg-green-500', 'hover:bg-green-600', 'text-white');
+                emptyCartMessage.classList.remove('hidden');
             } else {
-                sendOrderBtn.classList.add('bg-gray-300', 'text-gray-600');
-                sendOrderBtn.classList.remove('bg-green-500', 'hover:bg-green-600', 'text-white');
-                mobileSendOrderBtn.classList.add('bg-gray-300', 'text-gray-600');
-                mobileSendOrderBtn.classList.remove('bg-green-500', 'hover:bg-green-600', 'text-white');
+                emptyCartMessage.classList.add('hidden');
+                
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'flex justify-between items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-lg';
+                    
+                    cartItem.innerHTML = `
+                        <div>
+                            <h4 class="font-medium">${item.name}</h4>
+                            <div class="flex items-center mt-1">
+                                <button class="remove-item text-xs text-red-500 hover:text-red-700 dark:hover:text-red-400" data-index="${index}">
+                                    <i class="fas fa-trash mr-1"></i> Remover
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">${item.quantity}x R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+                        </div>
+                    `;
+                    
+                    cartItemsContainer.appendChild(cartItem);
+                });
+            }
+            
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Update total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            
+            // Validate order button
+            validateOrderButton();
+        }
+
+        function validateOrderButton() {
+            const nameValid = customerName.value.trim().length > 0;
+            const addressValid = customerAddress.value.trim().length > 0;
+            const cartValid = cart.length > 0;
+            
+            if (nameValid && addressValid && cartValid) {
+                sendOrderBtn.disabled = false;
+                sendOrderBtn.classList.remove('bg-gray-400');
+                sendOrderBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+            } else {
+                sendOrderBtn.disabled = true;
+                sendOrderBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                sendOrderBtn.classList.add('bg-gray-400');
             }
         }
 
-        // Send order
         function sendOrder() {
-            const name = customerNameEl.value.trim() || mobileCustomerNameEl.value.trim();
-            const address = customerAddressEl.value.trim() || mobileCustomerAddressEl.value.trim();
+            if (cart.length === 0) return;
             
-            if (!name || !address || cart.length === 0) return;
+            const name = customerName.value.trim();
+            const address = customerAddress.value.trim();
             
-            // Format order message
+            if (!name || !address) return;
+            
+            // Format WhatsApp message
             let message = `Olá, este é o meu pedido de hoje!\n\n`;
-            message += `*Nome:* ${name}\n`;
-            message += `*Endereço:* ${address}\n\n`;
-            message += `*Itens do pedido:*\n`;
+            message += `*NOME:* ${name}\n`;
+            message += `*ENDEREÇO:* ${address}\n\n`;
+            message += `*ITENS DO PEDIDO:*\n`;
             
             cart.forEach(item => {
-                message += `- ${item.name} x${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
+                message += `- ${item.name} (${item.quantity}x) - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
             });
             
-            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-            message += `\n*Total:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n\n`;
-            message += `Horário do pedido: ${new Date().toLocaleString()}`;
+            message += `\n*TOTAL:* R$ ${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2).replace('.', ',')}\n\n`;
+            message += `*HORÁRIO:* ${new Date().toLocaleString('pt-BR')}`;
             
-            // Encode for WhatsApp URL
+            // Encode for URL
             const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/5538998722422?text=${encodedMessage}`;
             
             // Open WhatsApp
             window.open(whatsappUrl, '_blank');
             
-            // Clear cart
+            // Reset cart and form
             cart = [];
+            customerName.value = '';
+            customerAddress.value = '';
             updateCart();
-            customerNameEl.value = '';
-            customerAddressEl.value = '';
-            mobileCustomerNameEl.value = '';
-            mobileCustomerAddressEl.value = '';
             
             // Show success message
             alert('Pedido enviado com sucesso! Você será redirecionado para o WhatsApp.');
@@ -589,8 +518,7 @@
 
         // Theme functions
         function checkThemePreference() {
-            if (localStorage.getItem('darkMode') === 'true' || 
-                (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
             } else {
                 document.documentElement.classList.remove('dark');
@@ -598,8 +526,13 @@
         }
 
         function toggleTheme() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('darkMode', isDark);
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
         }
     </script>
 </body>
